@@ -1,0 +1,259 @@
+@charset "UTF-8";
+/*
+
+Theme Name: note book
+Description: ノート風テーマ
+Author: a3
+Version: 1.0.0
+Licence: a3
+
+*/
+
+//リセット
+* {
+  margin: 0;
+  padding: 0;
+  color: black;
+  text-decoration: none;
+}
+ul,ol {
+  list-style-position: inside;
+}
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:100,300,400,500,700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: zen-kaku-gothic-antique, sans-serif;
+  font-style: normal;
+  background-attachment: fixed;
+  background-color:hsla(303,39%,90%,1);
+  background-image:
+    radial-gradient(at 77% 60%, hsla(223, 25%, 91%, 1) 0px, transparent 50%),
+    radial-gradient(at 55% 43%, hsla(223, 25%, 91%, 1) 0px, transparent 50%),
+    radial-gradient(at 40% 71%, hsla(223, 25%, 91%, 1) 0px, transparent 50%),
+    radial-gradient(at 30% 43%, hsla(223, 25%, 91%, 1) 0px, transparent 50%),
+    radial-gradient(at 50% 20%, hsla(328, 46%, 91%, 1) 0px, transparent 50%),
+    radial-gradient(at 72% 25%, hsla(303, 39%, 90%, 1) 0px, transparent 50%),
+    radial-gradient(at 26% 26%, hsla(350, 42%, 91%, 1) 0px, transparent 50%),
+    radial-gradient(at 10% 5%, hsla(32, 37%, 88%, 1) 0px, transparent 50%),
+    radial-gradient(at 86% 7%, hsla(32, 37%, 88%, 1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(51,50%,86%,1) 0px, transparent 50%),
+    radial-gradient(at 80% 88%, hsla(51,50%,86%,1) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, hsla(32,37%,88%,1) 0px, transparent 50%);
+}
+
+// webフォントが読み込まれてから表示
+html {
+  visibility: hidden;
+  transition: opacity 0.2s ease-out;
+  opacity: 0;
+}
+
+html.wf-active,
+html.loading-delay {
+  visibility: visible;
+  opacity: 1;
+}
+
+// ハンバーガーメニュー
+#menu-btn {
+  display: none;
+}
+
+.menu {
+  transition: all 0.38s;
+  position: relative;
+  width: 55px;
+  height: 55px;
+  margin: 20px;
+  cursor: pointer;
+  z-index: 100;
+
+  &_part {
+
+    width: 40px;
+    height: 2px;
+    position: absolute;
+    background: #313d44;
+    right: 0;
+    margin: auto;
+    left: 0;
+    transition: all 0.3s ease-in-out;
+    top: calc(50% - ((5px)) + -2px);
+
+    &:nth-of-type(1) {
+      top: calc(50% - ((5px)) + -8px);
+      width: 40px
+    }
+
+    &:nth-of-type(2) {
+      top: calc(50% - ((5px)) + 2px);
+      width: 40px
+    }
+
+    &:nth-of-type(3) {
+      top: calc(50% - ((5px)) + 12px);
+      width: 40px
+    }
+  }
+}
+
+input#menu-btn:checked+label .menu {
+  transform: scale(1) rotate(0deg);
+}
+
+input#menu-btn:checked+label .menu .menu_part:nth-of-type(1) {
+  transform: rotate(45deg);
+  width: 40px !important;
+  top: calc(50% - (1px)) !important;
+}
+
+input#menu-btn:checked+label .menu .menu_part:nth-of-type(2) {
+  left: -4px !important;
+  opacity: 0;
+}
+
+input#menu-btn:checked+label .menu .menu_part:nth-of-type(3) {
+  transform: rotate(-45deg);
+  width: 40px !important;
+  top: calc(50% - (1px)) !important;
+}
+
+
+// メニュー
+#main-navtab {
+  position: fixed;
+  border: solid 1px black;
+  border-top: none;
+  border-bottom: none;
+  top: 0;
+  left: -260px;
+  z-index: 0;
+  padding: 200px 100px;
+  font-size: 30px;
+  height: 100vh;
+  width: 360px;
+  transition: all 0.3s cubic-bezier(0, 0, 0.03, 1);
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    a {
+      opacity: 0;
+      display: block;
+      text-decoration: none;
+      color: black;
+      padding: 25px 0 5px;
+      position: relative;
+      font-size: 23px;
+
+      &::before {
+        content: "";
+        display: block;
+        height: 1px;
+        background: #dadada;
+        line-height: 1.8;
+        width: 120%;
+        position: absolute;
+        left: -10%;
+        bottom: -3px;
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        height: 1px;
+        background: black;
+        line-height: 1.8;
+        width: 0%;
+        position: absolute;
+        left: -5%;
+        bottom: -3px;
+        transition: all 0.3s cubic-bezier(0, 0, 0.03, 1);
+      }
+
+      &:hover {
+        &::after {
+          content: "";
+          display: block;
+          height: 1px;
+          background: black;
+          line-height: 1.8;
+          width: 120%;
+          position: absolute;
+          left: -10%;
+          bottom: -3px;
+        }
+      }
+    }
+  }
+
+  &.is-active {
+    z-index: 10;
+    background-color: rgb(255 255 255 / 92%);
+    backdrop-filter: blur(5px);
+    left: 0;
+    overflow: overlay;
+    border: none;
+
+    a {
+      opacity: 1;
+    }
+  }
+}
+
+#menu-closeArea.is-active {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 0;
+}
+
+#menu-clickArea {
+  width: 0px;
+  display: block;
+  position: relative;
+  z-index: 10;
+
+  &.is-active {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+#menu-hamburger {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+/////////////////////// 文字選択時の色
+::selection
+{
+  color: #222;
+  background: #f2ff41;
+}
+
+/* for Firefox */
+::-moz-selection
+{
+  color: #222;
+  background: #f2ff41;
+}
+//////////////////// スクロールバー
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-track{
+  background-color: #E7E7F3;
+}
+::-webkit-scrollbar-thumb{
+  background-color: #AAA2E5;
+}
